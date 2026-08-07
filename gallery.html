@@ -48,163 +48,163 @@
     <span class="close-lightbox">&times;</span>
     <img id="lightboxImg" class="lightbox-img" src="" alt="Full size photo view">
   </div>
+<script>
+  /* Array of filenames with normalized lowercase .jpg extensions */
+  const imageFiles = [
+    "0acd2342-6456-4ab6-81e0-0fd20cc5004d-IMG_9202.jpg",
+    "148bcf96-98b6-48bc-b425-f2b9822a50ad-IMG_9200.jpg",
+    "7531273f-2097-4a4d-9c93-82ab0175178f-IMG_9205.jpg",
+    "AK1_0961.jpg",
+    "AK1_0972.jpg",
+    "AK1_1016.jpg",
+    "AK1_1062.jpg",
+    "AK1_1068.jpg",
+    "AK1_1096.jpg",
+    "AK1_1243.jpg",
+    "AK1_1260.jpg",
+    "AK1_1263.jpg",
+    "AK1_1273.jpg",
+    "AK1_1325.jpg",
+    "AK1_1341.jpg",
+    "AK1_1352.jpg",
+    "AK1_1377.jpg",
+    "AK1_1442.jpg",
+    "AK1_1455.jpg",
+    "AK1_1517.jpg",
+    "AK1_1592.jpg",
+    "AK1_1596.jpg",
+    "AK1_1599.jpg",
+    "AK1_1709.jpg",
+    "AK1_1781.jpg",
+    "AK1_1812.jpg",
+    "AK1_1828.jpg",
+    "AK1_1848 (1).jpg",
+    "AK1_1848.jpg",
+    "AK1_1852.jpg",
+    "AK1_1858.jpg",
+    "AK1_1882.jpg",
+    "AK1_1887.jpg",
+    "AK1_1942.jpg",
+    "AK1_1968.jpg",
+    "AK1_2002.jpg",
+    "b2b51874-6da8-49e9-bc24-0397b181713f-IMG_9202.jpg",
+    "d9453fd5-3c7b-47dc-8d48-6d29e6c5a163-IMG_9204.jpg",
+    "IMG_20260524_191423.jpg",
+    "IMG_20260524_191426.jpg",
+    "IMG_20260524_191430.jpg",
+    "IMG_20260524_191433.jpg",
+    "IMG_20260524_191437.jpg",
+    "IMG_20260524_191442.jpg",
+    "IMG_20260524_204923.jpg",
+    "IMG_9168.jpg",
+    "IMG_9172.jpg",
+    "IMG_9173.jpg",
+    "IMG_9175.jpg",
+    "IMG_9177.jpg",
+    "IMG_9180.jpg",
+    "IMG_9182.jpg",
+    "IMG_9184.jpg",
+    "IMG_9187.jpg",
+    "IMG_9188.jpg",
+    "IMG_9189.jpg",
+    "IMG_9191.jpg",
+    "IMG_9193.jpg",
+    "IMG_9194.jpg",
+    "IMG_9196.jpg",
+    "IMG_9198.jpg",
+    "IMG_9207.jpg",
+    "IMG_9208.jpg",
+    "IMG_9215.jpg",
+    "IMG_9216.jpg",
+    "IMG_9217.jpg",
+    "IMG_9232.jpg",
+    "_DSF1429.jpg",
+    "_DSF1436.jpg",
+    "_DSF1437.jpg",
+    "_DSF1442.jpg",
+    "_DSF1445.jpg",
+    "_DSF1450.jpg",
+    "_DSF1452.jpg",
+    "_DSF1463.jpg",
+    "_DSF1486.jpg",
+    "_DSF1488.jpg",
+    "_DSF1489.jpg",
+    "_DSF1496.jpg",
+    "_DSF1497.jpg",
+    "_DSF1505.jpg",
+    "_DSF1509.jpg",
+    "_DSF1517.jpg",
+    "_DSF1518 (1).jpg",
+    "_DSF1521.jpg",
+    "_DSF1523.jpg",
+    "_DSF1531.jpg",
+    "_DSF1532.jpg",
+    "_DSF1544.jpg",
+    "_DSF1547.jpg",
+    "_DSF1550.jpg",
+    "_DSF1551.jpg",
+    "_DSF1562 (1).jpg",
+    "_DSF1562.jpg",
+    "_DSF1563.jpg",
+    "_DSF1564.jpg",
+    "_DSF1571.jpg",
+    "_DSF1572.jpg",
+    "_DSF1575.jpg",
+    "_DSF1587.jpg",
+    "_DSF1593.jpg",
+    "_DSF1595.jpg",
+    "_DSF1603.jpg",
+    "_DSF1607.jpg",
+    "_DSF1608.jpg",
+    "_DSF1614.jpg",
+    "_DSF1616.jpg",
+    "_DSF1617.jpg",
+    "_DSF1620.jpg",
+    "_DSF1622.jpg",
+    "_DSF1632.jpg",
+    "_DSF1634.jpg",
+    "_DSF1646.jpg",
+    "_DSF1654.jpg",
+    "_DSF1669.jpg",
+    "_DSF1674.jpg",
+    "_DSF1678.jpg",
+    "_DSF1685.jpg",
+    "_DSF1689.jpg",
+    "_DSF1696.jpg"
+  ];
 
-  <script>
-    /* Array of filenames formatted as valid JavaScript strings */
-    const imageFiles = [
-      "0acd2342-6456-4ab6-81e0-0fd20cc5004d-IMG_9202.jpg",
-      "148bcf96-98b6-48bc-b425-f2b9822a50ad-IMG_9200.jpg",
-      "7531273f-2097-4a4d-9c93-82ab0175178f-IMG_9205.jpg",
-      "AK1_0961.jpg",
-      "AK1_0972.jpg",
-      "AK1_1016.jpg",
-      "AK1_1062.jpg",
-      "AK1_1068.jpg",
-      "AK1_1096.jpg",
-      "AK1_1243.jpg",
-      "AK1_1260.jpg",
-      "AK1_1263.jpg",
-      "AK1_1273.jpg",
-      "AK1_1325.jpg",
-      "AK1_1341.jpg",
-      "AK1_1352.jpg",
-      "AK1_1377.jpg",
-      "AK1_1442.jpg",
-      "AK1_1455.jpg",
-      "AK1_1517.jpg",
-      "AK1_1592.jpg",
-      "AK1_1596.jpg",
-      "AK1_1599.jpg",
-      "AK1_1709.jpg",
-      "AK1_1781.jpg",
-      "AK1_1812.jpg",
-      "AK1_1828.jpg",
-      "AK1_1848 (1).jpg",
-      "AK1_1848.jpg",
-      "AK1_1852.jpg",
-      "AK1_1858.jpg",
-      "AK1_1882.jpg",
-      "AK1_1887.jpg",
-      "AK1_1942.jpg",
-      "AK1_1968.jpg",
-      "AK1_2002.jpg",
-      "b2b51874-6da8-49e9-bc24-0397b181713f-IMG_9202.jpg",
-      "d9453fd5-3c7b-47dc-8d48-6d29e6c5a163-IMG_9204.jpg",
-      "IMG_20260524_191423.jpg",
-      "IMG_20260524_191426.jpg",
-      "IMG_20260524_191430.jpg",
-      "IMG_20260524_191433.jpg",
-      "IMG_20260524_191437.jpg",
-      "IMG_20260524_191442.jpg",
-      "IMG_20260524_204923.jpg",
-      "IMG_9168.jpg",
-      "IMG_9172.jpg",
-      "IMG_9173.jpg",
-      "IMG_9175.jpg",
-      "IMG_9177.jpg",
-      "IMG_9180.jpg",
-      "IMG_9182.jpg",
-      "IMG_9184.jpg",
-      "IMG_9187.jpg",
-      "IMG_9188.jpg",
-      "IMG_9189.jpg",
-      "IMG_9191.jpg",
-      "IMG_9193.jpg",
-      "IMG_9194.jpg",
-      "IMG_9196.jpg",
-      "IMG_9198.jpg",
-      "IMG_9207.jpg",
-      "IMG_9208.jpg",
-      "IMG_9215.jpg",
-      "IMG_9216.jpg",
-      "IMG_9217.jpg",
-      "IMG_9232.jpg",
-      "_DSF1429.JPG",
-      "_DSF1436.JPG",
-      "_DSF1437.JPG",
-      "_DSF1442.JPG",
-      "_DSF1445.JPG",
-      "_DSF1450.JPG",
-      "_DSF1452.JPG",
-      "_DSF1463.JPG",
-      "_DSF1486.JPG",
-      "_DSF1488.JPG",
-      "_DSF1489.JPG",
-      "_DSF1496.JPG",
-      "_DSF1497.JPG",
-      "_DSF1505.JPG",
-      "_DSF1509.JPG",
-      "_DSF1517.JPG",
-      "_DSF1518 (1).JPG",
-      "_DSF1521.JPG",
-      "_DSF1523.JPG",
-      "_DSF1531.JPG",
-      "_DSF1532.JPG",
-      "_DSF1544.JPG",
-      "_DSF1547.JPG",
-      "_DSF1550.JPG",
-      "_DSF1551.JPG",
-      "_DSF1562 (1).jpg",
-      "_DSF1562.JPG",
-      "_DSF1563.JPG",
-      "_DSF1564.JPG",
-      "_DSF1571.JPG",
-      "_DSF1572.JPG",
-      "_DSF1575.JPG",
-      "_DSF1587.JPG",
-      "_DSF1593.JPG",
-      "_DSF1595.JPG",
-      "_DSF1603.JPG",
-      "_DSF1607.JPG",
-      "_DSF1608.JPG",
-      "_DSF1614.JPG",
-      "_DSF1616.JPG",
-      "_DSF1617.JPG",
-      "_DSF1620.JPG",
-      "_DSF1622.JPG",
-      "_DSF1632.JPG",
-      "_DSF1634.JPG",
-      "_DSF1646.JPG",
-      "_DSF1654.JPG",
-      "_DSF1669.JPG",
-      "_DSF1674.JPG",
-      "_DSF1678.JPG",
-      "_DSF1685.JPG",
-      "_DSF1689.JPG",
-      "_DSF1696.jpg"
-    ];
+  function loadGallery() {
+    const grid = document.getElementById("galleryGrid");
+    grid.innerHTML = "";
 
-    function loadGallery() {
-      const grid = document.getElementById("galleryGrid");
-      grid.innerHTML = "";
+    imageFiles.forEach(filename => {
+      const imagePath = encodeURI(filename);
+      
+      const card = document.createElement("div");
+      card.className = "gallery-card";
+      card.onclick = () => openLightbox(imagePath);
 
-      imageFiles.forEach(filename => {
-        const imagePath = encodeURIComponent(filename);
-        const card = document.createElement("div");
-        card.className = "gallery-card";
-        card.onclick = () => openLightbox(imagePath);
+      const img = document.createElement("img");
+      img.src = imagePath;
+      img.alt = "Wedding photo";
+      img.loading = "lazy";
 
-        const img = document.createElement("img");
-        img.src = imagePath;
-        img.alt = "Wedding photo";
-        img.loading = "lazy";
+      card.appendChild(img);
+      grid.appendChild(card);
+    });
+  }
 
-        card.appendChild(img);
-        grid.appendChild(card);
-      });
-    }
+  function openLightbox(src) {
+    document.getElementById("lightboxImg").src = src;
+    document.getElementById("lightbox").style.display = "block";
+  }
 
-    function openLightbox(src) {
-      document.getElementById("lightboxImg").src = src;
-      document.getElementById("lightbox").style.display = "block";
-    }
+  function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+  }
 
-    function closeLightbox() {
-      document.getElementById("lightbox").style.display = "none";
-    }
-
-    document.addEventListener("DOMContentLoaded", loadGallery);
-  </script>
-
+  document.addEventListener("DOMContentLoaded", loadGallery);
+</script>
+  
 </body>
 </html>
