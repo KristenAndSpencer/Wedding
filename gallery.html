@@ -49,7 +49,6 @@
     <img id="lightboxImg" class="lightbox-img" src="" alt="Full size photo view">
   </div>
 <script>
-  /* Array of filenames with normalized lowercase .jpg extensions */
   const imageFiles = [
     "0acd2342-6456-4ab6-81e0-0fd20cc5004d-IMG_9202.jpg",
     "148bcf96-98b6-48bc-b425-f2b9822a50ad-IMG_9200.jpg",
@@ -178,17 +177,28 @@
     grid.innerHTML = "";
 
     imageFiles.forEach(filename => {
-      const imagePath = encodeURI(filename);
-      
       const card = document.createElement("div");
       card.className = "gallery-card";
-      card.onclick = () => openLightbox(imagePath);
 
       const img = document.createElement("img");
+      const imagePath = encodeURI(filename);
       img.src = imagePath;
       img.alt = "Wedding photo";
       img.loading = "lazy";
 
+      // If the image fails to load (404), flip the extension case automatically
+      img.onerror = function() {
+        if (!this.dataset.triedFallback) {
+          this.dataset.triedFallback = "true";
+          if (this.src.endsWith(".jpg")) {
+            this.src = this.src.slice(0, -4) + ".JPG";
+          } else if (this.src.endsWith(".JPG")) {
+            this.src = this.src.slice(0, -4) + ".jpg";
+          }
+        }
+      };
+
+      card.onclick = () => openLightbox(img.src);
       card.appendChild(img);
       grid.appendChild(card);
     });
@@ -205,6 +215,5 @@
 
   document.addEventListener("DOMContentLoaded", loadGallery);
 </script>
-  
 </body>
 </html>
