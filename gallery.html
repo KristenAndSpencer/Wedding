@@ -179,7 +179,7 @@
       grid.innerHTML = "";
 
       imageFiles.forEach(filename => {
-        const imagePath = `images/${filename}`;
+        const imagePath = encodeURIComponent(filename);
         const card = document.createElement("div");
         card.className = "gallery-card";
         card.onclick = () => openLightbox(imagePath);
