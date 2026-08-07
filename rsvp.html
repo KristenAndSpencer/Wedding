@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP - Kristen & Spencer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; color: #333; text-align: center; line-height: 1.6; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+    .hero { background-color: #5b7065; color: #fff; padding: 80px 20px; }
+    .hero h1 { font-size: 3.2rem; margin-bottom: 10px; }
+    .hero p { font-size: 1.25rem; margin-top: 0; }
+    .nav-buttons { margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+    .btn { display: inline-block; background-color: #ffffff; color: #5b7065; padding: 12px 28px; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 1rem; border: 2px solid #ffffff; cursor: pointer; transition: all 0.2s; }
+    .btn:hover { background-color: #44544b; color: #ffffff; border-color: #44544b; }
+    .btn-primary { background-color: #a08c6e; color: #ffffff; border-color: #a08c6e; }
+    .btn-primary:hover { background-color: #8c7a60; border-color: #8c7a60; }
+    .container { max-width: 800px; margin: 40px auto; background: #ffffff; padding: 40px 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .form-group { margin-bottom: 20px; text-align: left; }
+    label { display: block; font-weight: 500; margin-bottom: 6px; }
+    input[type="text"], select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 1rem; }
+    .guest-card { background: #f0f4f1; padding: 18px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #5b7065; text-align: left; }
+    .guest-card h3 { margin-top: 0; margin-bottom: 10px; }
+    .error-msg { color: #d9534f; margin-top: 12px; display: none; }
+    #rsvp-step-2 { display: none; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>Kristen & Spencer</h1>
+    <p>Saturday, May 29, 2027 • Hart House, Toronto</p>
+    <div class="nav-buttons">
+      <a href="index.html" class="btn">Home</a>
+      <a href="rsvp.html" class="btn btn-primary">RSVP Now</a>
+      <a href="gallery.html" class="btn">View Gallery</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>RSVP</h2>
+
+    <!-- STEP 1: Name Lookup -->
+    <div id="rsvp-step-1">
+      <p>Please enter your first name to find your invitation:</p>
+      <div class="form-group">
+        <label for="firstNameInput">First Name:</label>
+        <input type="text" id="firstNameInput" placeholder="e.g. Nicole, Gina, Spencer, or Kristen">
+      </div>
+      <button class="btn btn-primary" onclick="lookupGuest()">Find Invitation</button>
+      <p id="error-message" class="error-msg">We couldn't find that name on our guest list. Please check the spelling or contact us directly.</p>
+    </div>
+
+    <!-- STEP 2: Household Attendance Selection -->
+    <form id="rsvp-step-2" action="https://script.google.com/macros/s/AKfycbxJT9qp_l1hAMZkGUqM6ZIyg52P-VDBVrKkNlTEk6fqt7Z_Ae4vv_jAF-eTyiPFaOiL5A/exec" method="POST">
+      <p>Welcome! Please select attendance for each member of your household:</p>
+      
+      <div id="household-members-container"></div>
+
+      <button type="submit" id="submit-btn" class="btn btn-primary">Submit RSVP</button>
+      <p id="thank-you-message" style="display:none; color: #5b7065; font-weight: bold; margin-top: 15px;">
+        Thank you! Your RSVP has been received.
+      </p>
+    </form>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       1. GUEST LIST DATASET
+       ========================================================================== */
+    const guestList = [
+      { familyName: "Nicole & Lucas", members: ["Nicole", "Lucas"] },
+      { familyName: "Gina & Daniel", members: ["Gina", "Daniel"] },
+      { familyName: "Celine", members: ["Celine"] },
+      { familyName: "Oliver & Jenny", members: ["Oliver", "Jenny"] },
+      { familyName: "Spencer & Kristen", members: ["Spencer", "Kristen"] }
+    ];
+
+    /* ==========================================================================
+       2. RSVP LOOKUP LOGIC
+       ========================================================================== */
+    let currentHousehold = null;
+
+    function lookupGuest() {
+      const inputName = document.getElementById("firstNameInput").value.trim().toLowerCase();
+      const errorMsg = document.getElementById("error-message");
+      errorMsg.style.display = "none";
+      if (!inputName) return;
+
+      currentHousehold = guestList.find(household => 
+        household.members.some(member => member.toLowerCase() === inputName)
+      );
+
+      if (currentHousehold) {
+        renderHouseholdRSVP(currentHousehold);
+      } else {
+        errorMsg.style.display = "block";
+      }
+    }
+
+        function renderHouseholdRSVP(household) {
+    document.getElementById("rsvp-step-1").style.display = "none";
+    const step2 = document.getElementById("rsvp-step-2");
+    step2.style.display = "block";
+
+    const container = document.getElementById("household-members-container");
+    container.innerHTML = "";
+
+    household.members.forEach((member) => {
+        const card = document.createElement("div");
+        card.classList.add("guest-card");
+        card.innerHTML = `
+        <h3>${member}</h3>
+        <div class="form-group">
+            <label>Will ${member} be attending?</label>
+            <select name="Attendance_${member}" required>
+            <option value="">-- Select --</option>
+            <option value="Joyfully Accepts">Joyfully Accepts (Yes)</option>
+            <option value="Declines with Regret">Declines with Regret (No)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Notes_${member}">Dietary Restrictions / Notes for ${member}:</label>
+            <input type="text" id="Notes_${member}" name="Notes_${member}" placeholder="e.g. Vegan, Nut Allergy, Gluten-free">
+        </div>
+        `;
+        container.appendChild(card);
+    });
+    }
+
+    /* ==========================================================================
+       3. AJAX SUBMISSION TO GOOGLE APPS SCRIPT
+       ========================================================================== */
+    const rsvpForm = document.getElementById('rsvp-step-2');
+    
+    rsvpForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submit-btn');
+      const thankYouMsg = document.getElementById('thank-you-message');
+      
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Submitting...";
+
+      const formData = new FormData(rsvpForm);
+      const searchParams = new URLSearchParams();
+
+      for (const pair of formData) {
+        searchParams.append(pair[0], pair[1]);
+      }
+
+      fetch(rsvpForm.action, {
+        method: 'POST',
+        body: searchParams
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === 'success') {
+          rsvpForm.reset();
+          submitBtn.style.display = 'none';
+          thankYouMsg.style.display = 'block';
+        } else {
+          alert('There was an error submitting your RSVP. Please try again.');
+          submitBtn.disabled = false;
+          submitBtn.innerText = "Submit RSVP";
+        }
+      })
+      .catch(error => {
+        alert('There was an error submitting your RSVP. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit RSVP";
+      });
+    });
+  </script>
+
+</body>
+</html>
