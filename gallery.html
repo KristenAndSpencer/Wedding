@@ -181,20 +181,31 @@
       card.className = "gallery-card";
 
       const img = document.createElement("img");
-      const imagePath = encodeURI(filename);
-      img.src = imagePath;
       img.alt = "Wedding photo";
       img.loading = "lazy";
 
-      // If the image fails to load (404), flip the extension case automatically
+      // Strip baseline extension to try multiple formats
+      const baseName = filename.replace(/\.(jpg|JPG|jpeg|JPEG)$/i, "");
+      
+      // Try lowercase first, then uppercase, then JPEG
+      const attempts = [
+        encodeURI(`${baseName}.jpg`),
+        encodeURI(`${baseName}.JPG`),
+        encodeURI(`${baseName}.jpeg`),
+        encodeURI(`${baseName}.JPEG`)
+      ];
+
+      let attemptIndex = 0;
+      img.src = attempts[attemptIndex];
+
+      // On 404 error, try the next extension format
       img.onerror = function() {
-        if (!this.dataset.triedFallback) {
-          this.dataset.triedFallback = "true";
-          if (this.src.endsWith(".jpg")) {
-            this.src = this.src.slice(0, -4) + ".JPG";
-          } else if (this.src.endsWith(".JPG")) {
-            this.src = this.src.slice(0, -4) + ".jpg";
-          }
+        attemptIndex++;
+        if (attemptIndex < attempts.length) {
+          this.src = attempts[attemptIndex];
+        } else {
+          // If all options fail, hide the broken card
+          card.style.display = "none";
         }
       };
 
